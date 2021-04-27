@@ -24,4 +24,3 @@ def lista_movimentos_possiveis (baralho, indice):
     elif extrai_valor(baralho[indice]) == extrai_valor(baralho[indice-3]) and ((indice-3) >= 0) :
         movimentos.append(3)
     return movimentos
-print(lista_movimentos_possiveis(['A♦', 'J♥', 'Q♣', 'K♠', '10♣'],2))
