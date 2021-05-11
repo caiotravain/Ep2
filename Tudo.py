@@ -48,7 +48,11 @@ def extrai_naipe(x):
     if '♠' in x:
         return '♠'
 def extrai_valor(x):
-    valor = x[:-1]
+    if '10' in x:
+        valor = x[:2]
+    else:
+        valor = x[:1]
+    return valor
     return valor
 def lista_movimentos_possiveis (baralho, indice):
     movimentos = []
@@ -85,11 +89,12 @@ if quer:
         t+=1
 while quer :
     qual_carta = int(input('Digite a posição da carta na qual deseja mover '))
+    while qual_carta > len(baralho) or qual_carta< 1:
+        print('Carta não encontrada')
+        qual_carta = int(input('Escolha a carta na qual você quer empilhar:'))
     indice = qual_carta-1 
     tem_movimentos = lista_movimentos_possiveis (baralho, (indice))
-    if qual_carta > len(baralho) or qual_carta < 1:
-        print('Digite uma posição valida')
-    elif tem_movimentos != []:
+    if tem_movimentos != []:
         if len(tem_movimentos) == 1:
             if tem_movimentos[0] == 1:    
                 print('1. ' + baralho[indice-1])
