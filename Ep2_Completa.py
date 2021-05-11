@@ -1,8 +1,8 @@
 import math
 import random
-def cria_baralho():
+def cria_baralho(): #Função cria o baralho
     baralho = []
-    naipe = '\033[1;30m' +'♠' +'\033[1;97m'
+    naipe = '\033[1;30m' +'♠' +'\033[1;97m' #Adiciona cor ao naipe
     count = 0
     t=1
     while count < 4:    
@@ -28,7 +28,7 @@ def cria_baralho():
             t +=1
         count +=1        
     return (baralho)
-def empilha(lista,origem,destino):
+def empilha(lista,origem,destino): #Empilha a carta no baralho
     lista2 = []
     for count in range(len(lista)):
         if count == destino:
@@ -38,7 +38,7 @@ def empilha(lista,origem,destino):
         else:
             lista2.append(lista[count])
     return lista2
-def extrai_naipe(x):
+def extrai_naipe(x): #pega o naipe da carta
     if '♥' in x:
         return '♥'
     if '♦' in x:
@@ -47,14 +47,14 @@ def extrai_naipe(x):
         return '♣'
     if '♠' in x:
         return '♠'
-def extrai_valor(x):
+def extrai_valor(x):#pega o valor da carta
     if '10' in x:
         valor = x[:2]
     else:
         valor = x[:1]
     return valor
     return valor
-def lista_movimentos_possiveis (baralho, indice):
+def lista_movimentos_possiveis (baralho, indice): #mostra os movimentos possiveis
     movimentos = []
     if indice == 0:
         return movimentos
@@ -67,81 +67,86 @@ def lista_movimentos_possiveis (baralho, indice):
     elif extrai_valor(baralho[indice]) == extrai_valor(baralho[indice-3]) and ((indice-3) >= 0) :
         movimentos.append(3)
     return movimentos
-def possui_movimentos_possiveis (baralho):
+def possui_movimentos_possiveis (baralho): #mostra se tem algum movimento possivel
     for count in range(len(baralho)):
         tem =lista_movimentos_possiveis(baralho,count)
         if tem != []:
             return True
     return False
 baralho = cria_baralho()
-random.shuffle(baralho)
+random.shuffle(baralho) #embaralha o baralho
 t=1
 jogar = input("Aperte enter para iniciar o jogo")
-if jogar != '':
+if jogar != '': #sai do jogo se não for apertado o enter
     quer = False
     print('Adeus')
 else: 
     quer = True
-if quer:
-    for e in baralho:
+if quer: #cria a condição para fazer o primeiro baralho
+    for e in baralho: #escreve o baralho interio
         parte1 = '\033[1;97m' + str(t)
         print('{0}. {1}'.format(parte1, e))
         t+=1
-while quer :
-    qual_carta = (input('Digite a posição da carta na qual deseja mover '))
-    while qual_carta == '':
+while quer : #cria o loop do jogo
+    qual_carta = (input('Digite a posição da carta na qual deseja mover ')) #carta na qual quer mover
+    while qual_carta == '': #evita enter acidental
         print('Carta não encontrada')
         qual_carta = (input('Digite a posição da carta na qual deseja mover '))
     qual_carta = int(qual_carta)
-    while qual_carta > len(baralho) or qual_carta< 1:
+    while qual_carta > len(baralho) or qual_carta< 1: #ve se existe a carta
         print('Carta não encontrada')
         qual_carta = (input('Escolha a carta na qual você quer empilhar:'))
-    indice = qual_carta-1 
-    tem_movimentos = lista_movimentos_possiveis (baralho, (indice))
+    indice = qual_carta-1 #indice da carta
+    tem_movimentos = lista_movimentos_possiveis (baralho, (indice)) #lista de movimentos
     if tem_movimentos != []:
-        if len(tem_movimentos) == 1:
-            if tem_movimentos[0] == 1:    
+        if len(tem_movimentos) == 1: #quando há só um movimento
+            if tem_movimentos[0] == 1: #Quando o movimento é do lado da carta
                 print('1. ' + baralho[indice-1])
                 carta = int(input('Escolha a carta na qual você quer empilhar:'))
-                while carta != 1:
+                while carta != 1: #Não deixa escolher carta não presente
                     print('Carta não encontrada')
                     carta = int(input('Escolha a carta na qual você quer empilhar:'))
-                baralho = empilha(baralho,indice,indice-1)
-            else:
+                baralho = empilha(baralho,indice,indice-1)#empilha a carta
+            else: #Quando o movimento é de tres espaços para tras
                 print('1. ' + baralho[indice-3])
                 carta = int(input('Escolha a carta na qual você quer empilhar:'))
-                while carta != 1:
+                while carta != 1:#Não deixa escolher carta não presente
                     print('Carta não encontrada')
                     carta = int(input('Escolha a carta na qual você quer empilhar:'))
-                baralho = empilha(baralho,indice,indice-3)
-        elif len(tem_movimentos) == 2:
+                baralho = empilha(baralho,indice,indice-3) #empilha a carta
+        elif len(tem_movimentos) == 2: #Quando há dois movimentos
             print('1. ' + baralho[indice -1])
             print('2. ' + baralho[indice -3])
             carta = int(input('Escolha a carta na qual você quer empilhar:'))  
-            while carta != 1 and carta!=2:
+            while carta != 1 and carta!=2:#Não deixa escolher carta não presente
                 print('Carta não encontrada')
                 carta = int(input('Escolha a carta na qual você quer empilhar:'))
-            if carta == 1:    
-                baralho = empilha(baralho,indice,indice-1)
-            elif carta ==2:
-                baralho = empilha(baralho,indice,indice-3)
+            if carta == 1:  #Quando o movimento é do lado da carta  
+                baralho = empilha(baralho,indice,indice-1)#empilha a carta
+            elif carta ==2:#Quando o movimento é de tres espaços para tras
+                baralho = empilha(baralho,indice,indice-3)#empilha a carta
             else:
                 print('Carta não encontrada')
         t=1
-        for e in baralho:
+        for e in baralho: #escreve o baralho já empilhado
             print(str(t) + '. ' + e)
             t+=1
-    else: 
+    else: # se não há movimentos para a carta escolhida
         print('Você não tem movimentos para essa carta')
-    if len(baralho) == 1:
+    if len(baralho) == 1: #se há somente uma carta define o ganhador
         print('Parabens você Ganhou!')
-    if possui_movimentos_possiveis (baralho) == False:
-        print('Você perdeu...')
-        continua = input('Digite 1 para sair e 2 para jogar novamente')
-        if continua == '1':
+        continua = input('Digite 1 para sair e 2 para jogar novamente')#se quiser jogar novamente ou sair
+        if continua == '2':
             quer= True
         else:
             quer =False
-    if quer == False:
+    elif possui_movimentos_possiveis (baralho) == False:#não há mais movimentos declara-se perdedor
+        print('Você perdeu...')
+        continua = input('Digite 1 para sair e 2 para jogar novamente')#se quiser jogar novamente ou sair
+        if continua == '2':
+            quer= True
+        else:
+            quer =False
+    if quer == False: #se não irá mais jogar Adeus!
         print('Adeus')
         
