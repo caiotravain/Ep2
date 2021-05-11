@@ -71,38 +71,53 @@ def possui_movimentos_possiveis (baralho):
     return False
 baralho = cria_baralho()
 random.shuffle(baralho)
-print(baralho)
 t=1
-quer = True
-for e in baralho:
-    parte1 = '\033[1;97m' + str(t)
-    print('	{0}. {1}'.format(parte1, e))
-    t+=1
-
+jogar = input("Aperte enter para iniciar o jogo")
+if jogar != '':
+    quer = False
+    print('Adeus')
+else: 
+    quer = True
+if quer:
+    for e in baralho:
+        parte1 = '\033[1;97m' + str(t)
+        print('{0}. {1}'.format(parte1, e))
+        t+=1
 while quer :
-    qual_carta = int(input('Escolha uma carta que quer mover: '))
+    qual_carta = int(input('Digite a posição da carta na qual deseja mover '))
     indice = qual_carta-1 
     tem_movimentos = lista_movimentos_possiveis (baralho, (indice))
     if qual_carta > len(baralho) or qual_carta < 1:
-        print('Digite um valor valido')
+        print('Digite uma posição valida')
     elif tem_movimentos != []:
         if len(tem_movimentos) == 1:
             if tem_movimentos[0] == 1:    
                 print('1. ' + baralho[indice-1])
-                carta = int(input('Esscolha a carta na qual você quer empilhar:'))
+                carta = int(input('Escolha a carta na qual você quer empilhar:'))
+                while carta != 1:
+                    print('Carta não encontrada')
+                    carta = int(input('Escolha a carta na qual você quer empilhar:'))
                 baralho = empilha(baralho,indice,indice-1)
             else:
                 print('1. ' + baralho[indice-3])
-                carta = int(input('Esscolha a carta na qual você quer empilhar:'))
+                carta = int(input('Escolha a carta na qual você quer empilhar:'))
+                while carta != 1:
+                    print('Carta não encontrada')
+                    carta = int(input('Escolha a carta na qual você quer empilhar:'))
                 baralho = empilha(baralho,indice,indice-3)
         elif len(tem_movimentos) == 2:
             print('1. ' + baralho[indice -1])
             print('2. ' + baralho[indice -3])
-            carta = int(input('Esscolha a carta na qual você quer empilhar:'))  
+            carta = int(input('Escolha a carta na qual você quer empilhar:'))  
+            while carta != 1 and carta!=2:
+                print('Carta não encontrada')
+                carta = int(input('Escolha a carta na qual você quer empilhar:'))
             if carta == 1:    
                 baralho = empilha(baralho,indice,indice-1)
-            else:
+            elif carta ==2:
                 baralho = empilha(baralho,indice,indice-3)
+            else:
+                print('Carta não encontrada')
         t=1
         for e in baralho:
             print(str(t) + '. ' + e)
