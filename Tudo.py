@@ -88,10 +88,14 @@ if quer:
         print('{0}. {1}'.format(parte1, e))
         t+=1
 while quer :
-    qual_carta = int(input('Digite a posição da carta na qual deseja mover '))
+    qual_carta = (input('Digite a posição da carta na qual deseja mover '))
+    while qual_carta == '':
+        print('Carta não encontrada')
+        qual_carta = (input('Digite a posição da carta na qual deseja mover '))
+    qual_carta = int(qual_carta)
     while qual_carta > len(baralho) or qual_carta< 1:
         print('Carta não encontrada')
-        qual_carta = int(input('Escolha a carta na qual você quer empilhar:'))
+        qual_carta = (input('Escolha a carta na qual você quer empilhar:'))
     indice = qual_carta-1 
     tem_movimentos = lista_movimentos_possiveis (baralho, (indice))
     if tem_movimentos != []:
@@ -138,4 +142,6 @@ while quer :
             quer= True
         else:
             quer =False
+    if quer == False:
+        print('Adeus')
         
